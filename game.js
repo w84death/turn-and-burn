@@ -33,7 +33,7 @@ let bikes = [
     brakeRate: 15,
     speedIncrease: 10,
     path: [],
-    color: {r:24,g:24,b:255}
+    color: {r:255,g:255,b:255}
   },
   {
     player: 1,

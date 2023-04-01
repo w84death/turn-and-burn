@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Track 1",
+    "description": "A simple oval track.",
+    "textureImage": "track1_texture.jpg",
+    "maskImage": "track1_mask.png",
+    "startPositions": [
+      { "x": 400, "y": 500 },
+      { "x": 400, "y": 520 }
+    ]
+  }
+]

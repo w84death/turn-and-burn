@@ -1,0 +1,100 @@
+body {
+  background-color: #333;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#game-ui {
+  position:relative;
+  margin: 0 auto;
+  width:800px;
+  height:600px;
+}
+
+#game-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+#timer-container {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+}
+
+
+#timer-container p {
+  margin: 0;
+}
+
+
+.timer {
+    font-size: 16px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+.overlay .container {
+  width:80%;
+  height:80%;
+}
+
+button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+[hidden] {
+  display: none;
+}

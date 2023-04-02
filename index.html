@@ -13,58 +13,140 @@
     </head>
     <body>
         <div id="game-ui">
-            <canvas id="gameCanvas" width="800" height="600"></canvas>
-            <div id="timer-container">
+            <canvas id="track-canvas" width="800" height="600"></canvas>
+            <canvas id="tire-trails-canvas" width="800" height="600"></canvas>
+            <canvas id="gameplay-canvas" width="800" height="600"></canvas>
+            <div id="timer-container" hidden>
                 <div id="player1-stats">
-                    <span id="player1-straight-time">Straight Time: 0.00</span>
-                    <span id="player1-current-speed">Current Speed: 0.00</span>
-                    <span id="player1-max-speed">Max Speed: 0.00</span>
+                    Bike: <span id="player1-bike">-</span>
+                    Time: <span id="player1-race-time">0.00</span>s
+                    Speed:<span id="player1-current-speed">0.00</span>px/s
+                    Laps:<span id="player1-laps">0</span>
                 </div>
                 <div id="player2-stats" style="display: none;">
-                    <span id="player2-straight-time">Straight Time: 0.00</span>
-                    <span id="player2-current-speed">Current Speed: 0.00</span>
-                    <span id="player2-max-speed">Max Speed: 0.00</span>
+                    Bike: <span id="player2-bike">-</span>
+                    Time: <span id="player2-race-time">0.00</span>s
+                    Speed:<span id="player2-current-speed">0.00</span>px/s
+                    Laps:<span id="player2-laps">0</span>
                 </div>
             </div>
 
             <div id="main-menu" class="overlay" hidden>
                 <div class="container">
-                    <h1><img src="logo.svg" alt="Turn&amp;Burn" /></h1>
-                    <p>
-                    Welcome to <strong>Turn&amp;Burn</strong>, an exhilarating bike racing game where every second counts! In this thrilling race against time, you'll need to rely on your reflexes and quick thinking to navigate the treacherous tracks.
+                    <h1 class="logo"><img src="logo.svg" alt="Turn&amp;Burn" class="logoAnim" /></h1>
+                    <p class="border invert introAnim motd">
+                        The rules are simple: <strong>You can only turn left</strong>, and you must reach the finish line as fast as possible.
                     </p>
-                    <p>
-                    The rules are simple: <strong>You can only turn left</strong>, and you must reach the finish line as fast as possible. To help you master these high-speed challenges, you'll control your bike using your mouse buttons: <strong>left-click to turn left</strong>, and <strong>right-click to hit the brakes</strong>. Are you ready to put your skills to the test and conquer the tracks?
-                    </p>
-                    <div>
-                        <p>
-                            <label for="track-selection">Select a track:</label>
+                    <div class="flexrows introAnim">
+                        <div>
                             <select id="track-selection"></select>
-                        </p>
-                        <p>
-                            <button id="start-single-race">Start Single Race</button>
-                            <button id="start-two-player-race">Start Two Player Race</button>
-                        </p>
+                        </div>
+                        <div class="border">
+                            <div class="flexcolumns bikes">
+                                <div class="flexrows">
+                                    <div><img src="bike1.jpg" alt="Rocket Racer" data-index="0" class="p1 bike-image"></div>
+                                    <div>
+                                        <h3>Rocket Racer</h3>
+                                        <ul>
+                                            <li><progress value="50" max="60"></progress>  Acc: 50px/s</li>
+                                            <li><progress value="300" max="320"></progress> MaxQ: 300px/s</li>
+                                            <li> <progress value="4" max="6"></progress> Steer: 4</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flexrows">
+                                    <div><img src="bike2.jpg" alt="Steady Cruiser" data-index="1" class="p1 bike-image selected"></div>
+                                    <div>
+                                        <h3>Steady Cruiser</h3>
+                                        <ul>
+                                            <li><progress value="25" max="60"></progress>  Acc: 25px/s</li>
+                                            <li><progress value="200" max="320"></progress> MaxQ: 200px/s</li>
+                                            <li> <progress value="3" max="6"></progress> Steer: 3</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flexrows">
+                                    <div><img src="bike3.jpg" alt="Cautious Crawler" data-index="2" class="p1 bike-image"></div>
+                                    <div>
+                                        <h3>Cautious Crawler</h3>
+                                        <ul>
+                                            <li><progress value="10" max="60"></progress>  Acc: 10px/s</li>
+                                            <li><progress value="100" max="320"></progress> MaxQ: 100px/s</li>
+                                            <li> <progress value="2.5" max="6"></progress> Steer: 2.5</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button id="start-single-race">Start Single Player Race</button>
+                            </div>
+                        </div>
+                        <div class="border">
+                            <div class="flexcolumns bikes">
+                                <div class="flexrows">
+                                    <div><img src="bike1.jpg" alt="Rocket Racer" data-index="0" class="p2 bike-image"></div>
+                                    <div>
+                                        <h3>Rocket Racer</h3>
+                                        <ul>
+                                            <li><progress value="50" max="60"></progress>  Acc: 50px/s</li>
+                                            <li><progress value="300" max="320"></progress> MaxQ: 300px/s</li>
+                                            <li> <progress value="4" max="6"></progress> Steer: 4</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flexrows">
+                                    <div><img src="bike2.jpg" alt="Steady Cruiser" data-index="1" class="p2 bike-image selected"></div>
+                                    <div>
+                                        <h3>Steady Cruiser</h3>
+                                        <ul>
+                                            <li><progress value="25" max="60"></progress>  Acc: 25px/s</li>
+                                            <li><progress value="200" max="320"></progress> MaxQ: 200px/s</li>
+                                            <li> <progress value="3" max="6"></progress> Steer: 3</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flexrows">
+                                    <div><img src="bike3.jpg" alt="Cautious Crawler" data-index="2" class="p2 bike-image"></div>
+                                    <div>
+                                        <h3>Cautious Crawler</h3>
+                                        <ul>
+                                            <li><progress value="10" max="60"></progress>  Acc: 10px/s</li>
+                                            <li><progress value="100" max="320"></progress> MaxQ: 100px/s</li>
+                                            <li> <progress value="2.5" max="6"></progress> Steer: 2.5</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button id="start-two-player-race" class="dark">Start Two Player Race</button>
+                            </div>
+                        </div>
                     </div>
-                    <hr/>
-                    <p><small>Authors: ChatGPT and Krzysztof Krystian Jankowski</small></p>
                 </div>
             </div>
+            <div id="infoBox" class="infoBox"></div>
             <div id="loading-screen" class="overlay" hidden>
-                <h1>Loading...</h1>
+                <h2>Loading...</h2>
             </div>
             <div id="game-over-screen" class="overlay" hidden>
-                <h1>Game Over!</h1>
-                <p id="total-time">Total Time: </p>
-                <p id="turn-time">Turn Time: </p>
-                <p id="max-speed">Maximum Speed: </p>
+                <h2>Game Over!</h2>
+                <div>
+                    <div id="summary" class="border">
+                        <p>Track: <span id="summary-track"></span></p>
+                        <hr/>
+                        <p>Bike: <span id="player1-bike-name"></span></p>
+                        <p>Race Time: <span id="player1-race-time-sum"></span> seconds</p>
+                        <p>Laps: <span id="player1-laps-sum"></span></p>
+                    </div>
+                </div>
                 <button id="restart-button">Restart</button>
             </div>
         </div>
 
         <footer>
-        &copy; <script>document.write(new Date().getFullYear())</script> Made by ChatGPT and Krzysztof Krystian Jankowski
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Made by ChatGPT and <a href="https://krzysztofjankowski.com/">Krzysztof Krystian Jankowski</a> from Poland</p>
+        <p><small>Music by <a href="https://freemusicarchive.org/music/audiorezout/">Audiorezout</a> from Ukraine</small></p>
         </footer>
-        <script src="game.js?v=2"></script>
+        <audio id="titleMusic" src="title-music.mp3" loop></audio>
+        <audio id="gameMusic" src="game-music.mp3" loop></audio>
+        <audio id="buttonClick" src="button-click.wav"></audio>
+        <audio id="bikeHit" src="bike-hit.wav"></audio>
+        <script src="game.js"></script>
     </body>
 </html>

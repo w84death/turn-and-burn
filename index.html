@@ -12,33 +12,39 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1 id="game-title">Turn&amp;Burn</h1>
         <div id="game-ui">
             <canvas id="gameCanvas" width="800" height="600"></canvas>
             <div id="timer-container">
-                <div id="gameTime" class="timer"></div>
-                <div id="straightTime" class="timer"></div>
-                <div id="turnTime" class="timer"></div>
-                <div id="bikeSpeed" class="timer"></div>
+                <div id="player1-stats">
+                    <span id="player1-straight-time">Straight Time: 0.00</span>
+                    <span id="player1-current-speed">Current Speed: 0.00</span>
+                    <span id="player1-max-speed">Max Speed: 0.00</span>
+                </div>
+                <div id="player2-stats" style="display: none;">
+                    <span id="player2-straight-time">Straight Time: 0.00</span>
+                    <span id="player2-current-speed">Current Speed: 0.00</span>
+                    <span id="player2-max-speed">Max Speed: 0.00</span>
+                </div>
             </div>
+
             <div id="main-menu" class="overlay" hidden>
                 <div class="container">
+                    <h1><img src="logo.svg" alt="Turn&amp;Burn" /></h1>
                     <p>
-                    Welcome to <strong>Turn & Burn</strong>, an exhilarating bike racing game where every second counts! In this thrilling race against time, you'll need to rely on your reflexes and quick thinking to navigate the treacherous tracks.
+                    Welcome to <strong>Turn&amp;Burn</strong>, an exhilarating bike racing game where every second counts! In this thrilling race against time, you'll need to rely on your reflexes and quick thinking to navigate the treacherous tracks.
                     </p>
                     <p>
                     The rules are simple: <strong>You can only turn left</strong>, and you must reach the finish line as fast as possible. To help you master these high-speed challenges, you'll control your bike using your mouse buttons: <strong>left-click to turn left</strong>, and <strong>right-click to hit the brakes</strong>. Are you ready to put your skills to the test and conquer the tracks?
                     </p>
                     <div>
-                        <label for="num-players">Number of players:</label>
-                        <select id="num-players">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-
-                        <label for="track-selection">Select a track:</label>
-                        <select id="track-selection"></select>
-                        <button id="start-game">Start Game</button>
+                        <p>
+                            <label for="track-selection">Select a track:</label>
+                            <select id="track-selection"></select>
+                        </p>
+                        <p>
+                            <button id="start-single-race">Start Single Race</button>
+                            <button id="start-two-player-race">Start Two Player Race</button>
+                        </p>
                     </div>
                     <hr/>
                     <p><small>Authors: ChatGPT and Krzysztof Krystian Jankowski</small></p>

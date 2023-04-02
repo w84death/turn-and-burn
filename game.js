@@ -2,8 +2,6 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let lastFrameTime = performance.now();
 let gameStartTime = new Date();
-let straightTime = 0;
-let turnTime = 0;
 let totalTime = 0;
 let maxBikeSpeed = 0;
 let players = 1;
@@ -33,7 +31,9 @@ let bikes = [
     brakeRate: 15,
     speedIncrease: 10,
     path: [],
-    color: {r:255,g:255,b:255}
+    color: {r:255,g:255,b:255},
+    straightTime: 0,
+    turnTime: 0
   },
   {
     player: 1,
@@ -49,7 +49,9 @@ let bikes = [
     brakeRate: 15,
     speedIncrease: 10,
     path: [],
-    color: {r:255,g:24,b:24}
+    color: {r:255,g:24,b:24},
+    straightTime: 0,
+    turnTime: 0
   },
 ];
 
@@ -156,23 +158,6 @@ function resetBike(bike) {
   bike.path = [];
 }
 
-function updateTimers() {
-  const currentTime = new Date();
-  const elapsedTime = (currentTime - gameStartTime) / 1000;
-
-  document.getElementById("gameTime").textContent = `Game time: ${elapsedTime.toFixed(2)}s`;
-
-  if (bikes[0].isTurning) {
-    turnTime += 0.016; // Assuming 60 FPS
-  } else {
-    straightTime += 0.016; // Assuming 60 FPS
-  }
-
-  document.getElementById("straightTime").textContent = `Straight time: ${straightTime.toFixed(2)}s`;
-  document.getElementById("turnTime").textContent = `Turning time: ${turnTime.toFixed(2)}s`;
-  document.getElementById("bikeSpeed").textContent = `Bike speed: ${bikes[0].speed.toFixed(2)}px/s`;
-}
-
 function checkCollisions(bike) {
   const bikeCenterX = Math.floor(bike.x);
   const bikeCenterY = Math.floor(bike.y);
@@ -234,9 +219,9 @@ function changeGameState(newState) {
     timerContainer.removeAttribute("hidden");
     gameStartTime = new Date();
   } else if (newState === GameState.GAMEOVER) {
-    document.getElementById("total-time").textContent = "Total Time: " + totalTime.toFixed(2) + "s";
-    document.getElementById("turn-time").textContent = "Turn Time: " + turnTime.toFixed(2) + "s";
-    document.getElementById("max-speed").textContent = "Maximum Speed: " + maxBikeSpeed.toFixed(2) + "ps/s";
+    // document.getElementById("total-time").textContent = "Total Time: " + totalTime.toFixed(2) + "s";
+    // document.getElementById("turn-time").textContent = "Turn Time: " + turnTime.toFixed(2) + "s";
+    // document.getElementById("max-speed").textContent = "Maximum Speed: " + maxBikeSpeed.toFixed(2) + "ps/s";
     gameOverScreen.removeAttribute("hidden");
     timerContainer.setAttribute("hidden", "");
   } else if (newState === GameState.RESTART) {
@@ -273,8 +258,23 @@ function gameLoop(currentTime) {
       }
       updateBike(bikes[i], deltaTime);
       drawTireMark(bikes[i]);
+
+      // document.getElementById("gameTime").textContent = `Game time: ${elapsedTime.toFixed(2)}s`;
+
+      if (bikes[i].isTurning) {
+        bikes[i].turnTime += 0.016; // Assuming 60 FPS
+      } else {
+        bikes[i].straightTime += 0.016; // Assuming 60 FPS
+      }
+
+      // Update the stats for each player
+      document.getElementById(`player${i + 1}-straight-time`).innerText =
+        "Straight Time: " + bikes[i].straightTime.toFixed(2);
+      document.getElementById(`player${i + 1}-current-speed`).innerText =
+        "Current Speed: " + bikes[i].speed.toFixed(2);
+      document.getElementById(`player${i + 1}-max-speed`).innerText =
+        "Max Speed: " + bikes[i].maxSpeed.toFixed(2);
     }
-    updateTimers();
   }else
   if (currentGameState === GameState.PAUSED) {
     drawTrackTexture();
@@ -343,14 +343,29 @@ document.getElementById("restart-button").addEventListener("click", () => {
   changeGameState(GameState.RESTART);
 });
 
-document.getElementById("start-game").addEventListener("click", () => {
-  const trackSelection = document.getElementById("track-selection");
-  const selectedTrackIndex = parseInt(trackSelection.value);
-  const numPlayers = parseInt(document.getElementById("num-players").value);
+function startGame(selectedTrackIndex, numPlayers) {
   loadTrack(tracks[selectedTrackIndex]);
   bikes = bikes.slice(0, numPlayers);
   players = numPlayers;
+  const player2Stats = document.getElementById("player2-stats");
+  if (bikes.length === 2) {
+    player2Stats.style.display = "block";
+  } else {
+    player2Stats.style.display = "none";
+  }
   changeGameState(GameState.PAUSED);
+}
+
+document.getElementById("start-single-race").addEventListener("click", () => {
+  const trackSelection = document.getElementById("track-selection");
+  const selectedTrackIndex = parseInt(trackSelection.value);
+  startGame(selectedTrackIndex, 1);
+});
+
+document.getElementById("start-two-player-race").addEventListener("click", () => {
+  const trackSelection = document.getElementById("track-selection");
+  const selectedTrackIndex = parseInt(trackSelection.value);
+  startGame(selectedTrackIndex, 2);
 });
 
 changeGameState(GameState.MAIN_MENU);

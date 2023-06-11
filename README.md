@@ -5,3 +5,6 @@ The rules are simple: You can only turn left, and you must reach the finish line
 
 ## Music
 The Final Race (Dark Aggressive Powerful Hybrid Action Energetic Sports Adrenaline Sci-Fi Fashion Cyberpunk Futuristic Promo Teaser Trailer Music) by Audiorezout
+
+## Play
+Game is available online at [https://turn-and-burn.p1x.in/](https://turn-and-burn.p1x.in/).
